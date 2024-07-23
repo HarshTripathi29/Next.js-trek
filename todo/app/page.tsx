@@ -1,3 +1,4 @@
+'use client'
 import { useState } from "react";
 
 export default function Home() {
@@ -5,6 +6,9 @@ export default function Home() {
   // Specify string type for todo
   const [list, setList] = useState<string[]>([]); 
   // Specify string array type for list
+
+  const[editIndex, setEditIndex]=useState<number|null>(null);
+  const [editTodo, setEditTodo]=useState<string>('');
 
   const handleClick = () => {
     setList([...list, todo]);
@@ -17,6 +21,18 @@ export default function Home() {
     setList(list.filter((_, i) => i !== index));
     console.log(list);
   };
+
+  const handleEdit=(index:number)=>{
+    setEditIndex(index);
+    setEditTodo(list[index]);
+  }
+
+  const handleSave=()=>{
+    const updatedList = list.map((item, i)=>i==editIndex?editTodo:item)
+    setList(updatedList);
+    setEditIndex(null);
+    setEditTodo('');
+  }
 
   return (
     <main className="">
@@ -42,16 +58,49 @@ export default function Home() {
             {list.map((item, index) => (
               <li key={index} className="flex p-4 mt-1 justify-between">
                 <div className="flex">
-                  <p>{index + 1}. </p>
-                  <div>{item}</div>
+                  <p className="text-center">{index + 1}. </p>
+                  {
+                    index===editIndex?
+                    (
+                    <input 
+                      type='text' 
+                      placeholder="New todo"
+                      onChange={(e)=>setEditTodo(e.target.value)}
+                      className='ml-2 ' 
+                    />
+                  ):(
+                  <>
+                    <div>{item}</div>
+                  </>
+                  )
+                  }
                 </div>
                 
+                <div>
                 <button
                   className="border-none rounded-md ml-2 py-2 px-5 bg-red-600 text-white text-md"
                   onClick={() => handleDelete(index)}
                 >
                   delete
                 </button>
+                {
+                  index===editIndex?(
+                    <button
+                    className="border-none rounded-md ml-2 py-2 px-5 bg-cyan-600 text-white text-md"
+                    onClick={handleSave}
+                    >
+                    Save
+                    </button>
+                  ):(
+                <button
+                  className="border-none rounded-md ml-2 py-2 px-5 bg-cyan-600 text-white text-md"
+                  onClick={()=>handleEdit(index)}
+                >
+                  Edit
+                </button>
+                  )
+                }
+                </div>
               </li>
             ))}
           </ol>
