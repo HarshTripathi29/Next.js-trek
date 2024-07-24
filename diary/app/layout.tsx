@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Sidebar from "./components/Sidebar";
 import ActionBar from "./components/ActionBar";
+import { DataContextProvider } from "./context/DataContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,11 +20,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <div className="flex ">
-        <Sidebar/>
-        {children}
-        <ActionBar/>
-        </div>
+        <DataContextProvider>
+          <div className="flex w-screen">
+            <Sidebar />
+            <main>{children}</main>
+            <ActionBar />
+          </div>
+        </DataContextProvider>
       </body>
     </html>
   );

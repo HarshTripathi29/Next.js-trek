@@ -1,24 +1,24 @@
 'use client'
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import dynamic from 'next/dynamic';
 import 'react-quill/dist/quill.snow.css';
+import { DataContext, DataContextType } from '../context/DataContext';
 
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
-interface DataItem {
-  title: string;
-  category: string;
-  desp: string;
-  para: string;
-}
-
 const Page: React.FC = () => {
-  const [data, setData] = useState<DataItem[]>([]);
-
   const [title, setTitle] = useState<string>('');
   const [category, setCategory] = useState<string>('');
   const [desp, setDesp] = useState<string>('');
   const [para, setPara] = useState<string>('');
+
+  const context = useContext(DataContext);
+
+  if (!context) {
+    throw new Error('DataContext must be used within a DataContextProvider');
+  }
+
+  const { data, setData } = context;
 
   console.log(para);
 
@@ -27,12 +27,12 @@ const Page: React.FC = () => {
     setTitle('');
     setDesp('');
     setCategory('');
-    setPara(''); 
+    setPara('');
     console.log(data);
   };
 
   return (
-    <div className='w-4/6 h-screen bg-neutral-900 flex justify-center align-top p-12'>
+    <div className='w-[100%] h-screen bg-neutral-900 flex justify-center align-top p-12'>
       <div className='flex'>
         <div className='flex justify-center'>
           <ReactQuill
