@@ -1,36 +1,47 @@
-'use client'
-import React, { useContext, useState } from 'react';
+'use client';
+import React, { useContext, useState, useEffect } from 'react';
+import { useRouter, useParams } from 'next/navigation';
 import dynamic from 'next/dynamic';
-import { useRouter } from 'next/navigation';
 import 'react-quill/dist/quill.snow.css';
-import { DataContext, DataContextType } from '../context/DataContext';
+import { DataContext, DataContextType } from '../../context/DataContext';
 
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
-const Page: React.FC = () => {
-  const [title, setTitle] = useState<string>('');
-  const [category, setCategory] = useState<string>('');
-  const [desp, setDesp] = useState<string>('');
-  const [para, setPara] = useState<string>('');
-
-  const context = useContext(DataContext);
-  const router=useRouter();
+const EditPage: React.FC = () => {
+  const router = useRouter();
+  const params = useParams();
+  const { id } = params;
+  const context = useContext<DataContextType | undefined>(DataContext);
 
   if (!context) {
     throw new Error('DataContext must be used within a DataContextProvider');
   }
 
   const { data, setData } = context;
+  const [title, setTitle] = useState<string>('');
+  const [category, setCategory] = useState<string>('');
+  const [desp, setDesp] = useState<string>('');
+  const [para, setPara] = useState<string>('');
 
-  console.log(para);
+  // get the current values of the input fields to be edited.  
+  useEffect(() => {
+    if (id !== undefined) {
+      const item = data[Number(id)];
+      if (item) {
+        setTitle(item.title);
+        setCategory(item.category);
+        setDesp(item.desp);
+        setPara(item.para);
+      }
+    }
+  }, [id, data]);
 
-  const handleClick = () => {
-    setData([...data, { title, category, desp, para }]);
-    setTitle('');
-    setDesp('');
-    setCategory('');
-    setPara('');
-    console.log(data);
+  // update the data state. Get the id(index) of the object to be updated and update only that object
+  const handleSave = () => {
+    const updatedData = [...data];
+    updatedData[Number(id)] = { title, category, desp, para };
+    setData(updatedData);
+    // setData([...data, { title, category, desp, para }])
     router.push('/');
   };
 
@@ -76,7 +87,7 @@ const Page: React.FC = () => {
           <div className='p-2 pl-0'>
             <button
               className='bg-white text-black py-1 px-2 m-2 rounded-sm'
-              onClick={handleClick}
+              onClick={handleSave}
             >
               Save
             </button>
@@ -86,6 +97,6 @@ const Page: React.FC = () => {
       </div>
     </div>
   );
-}
+};
 
-export default Page;
+export default EditPage;
