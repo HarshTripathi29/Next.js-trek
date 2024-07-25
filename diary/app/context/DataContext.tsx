@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import React, { createContext, useState, ReactNode, Dispatch, SetStateAction } from 'react';
 
 interface DataItem {
@@ -11,6 +11,8 @@ interface DataItem {
 export interface DataContextType {
     data: DataItem[];
     setData: Dispatch<SetStateAction<DataItem[]>>;
+    showDemo: boolean;
+    setShowDemo: Dispatch<SetStateAction<boolean>>;
 }
 
 interface DataContextProviderProps {
@@ -21,13 +23,15 @@ export const DataContext = createContext<DataContextType | undefined>(undefined)
 
 export const DataContextProvider: React.FC<DataContextProviderProps> = ({ children }) => {
     const [data, setData] = useState<DataItem[]>([]);
+    const [showDemo, setShowDemo] = useState(false);
 
     return (
-        <DataContext.Provider value={{ data, setData }}>
+        <DataContext.Provider value={{ data, setData, showDemo, setShowDemo }}>
             {children}
         </DataContext.Provider>
     );
 };
+
 
 // things to keep in mind
 // Correct the createContext import:
