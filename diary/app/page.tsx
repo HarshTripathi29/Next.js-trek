@@ -1,23 +1,44 @@
-// Home.jsx
 'use client';
 import React, { useContext } from 'react';
 import { useRouter } from 'next/navigation';
 import { DataContext, DataContextType } from './context/DataContext';
 import DataCard from './components/DataCard';
 import Header from './components/Header';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import FavoriteIcon from '@mui/icons-material/Favorite';
 
 const demoData = [
+  // Technology
   { title: "Exploring React", desp: "A comprehensive guide to getting started with React.", category: "Technology", para: "" },
-  { title: "Top 10 Travel Destinations", desp: "A curated list of the best travel destinations around the world.", category: "Travel", para: "" },
-  { title: "Healthy Eating Habits", desp: "Tips and tricks for maintaining a healthy diet.", category: "Health", para: "" },
   { title: "New Tech Gadgets of 2024", desp: "An overview of the most anticipated tech gadgets of the year.", category: "Technology", para: "" },
-  { title: "Delicious Vegan Recipes", desp: "A collection of easy and delicious vegan recipes.", category: "Food", para: "" },
   { title: "The Future of AI", desp: "Predictions and trends for artificial intelligence in the next decade.", category: "Technology", para: "" },
+  { title: "Innovations in Renewable Energy", desp: "The latest advancements in renewable energy technologies.", category: "Technology", para: "" },
+
+  // Travel
+  { title: "Top 10 Travel Destinations", desp: "A curated list of the best travel destinations around the world.", category: "Travel", para: "" },
   { title: "Budget Travel Tips", desp: "How to travel the world without breaking the bank.", category: "Travel", para: "" },
+  { title: "Adventurous Travel Spots", desp: "Top spots for thrill-seekers and adventure lovers.", category: "Travel", para: "" },
+  { title: "Luxury Travel on a Budget", desp: "Tips for experiencing luxury travel without the high cost.", category: "Travel", para: "" },
+
+  // Health
+  { title: "Healthy Eating Habits", desp: "Tips and tricks for maintaining a healthy diet.", category: "Health", para: "" },
   { title: "Staying Fit at Home", desp: "Workout routines and fitness tips for exercising at home.", category: "Health", para: "" },
+  { title: "Mental Health Tips", desp: "Strategies for maintaining mental well-being.", category: "Health", para: "" },
+  { title: "Holistic Health Approaches", desp: "A look into holistic and alternative health practices.", category: "Health", para: "" },
+
+  // Food
+  { title: "Delicious Vegan Recipes", desp: "A collection of easy and delicious vegan recipes.", category: "Food", para: "" },
+  { title: "Quick and Healthy Snacks", desp: "Ideas for nutritious snacks that are easy to prepare.", category: "Food", para: "" },
+  { title: "International Cuisine", desp: "Exploring culinary delights from around the world.", category: "Food", para: "" },
+  { title: "Baking at Home", desp: "Tips and recipes for baking delicious treats at home.", category: "Food", para: "" },
+
+  // Entertainment
   { title: "The Best Movies of 2023", desp: "A list of the best movies released in 2023.", category: "Entertainment", para: "" },
-  { title: "Innovations in Renewable Energy", desp: "The latest advancements in renewable energy technologies.", category: "Technology", para: "" }
+  { title: "Must-Watch TV Series", desp: "Top TV series you shouldn't miss.", category: "Entertainment", para: "" },
+  { title: "Upcoming Music Albums", desp: "Highly anticipated music albums set to release soon.", category: "Entertainment", para: "" },
+  { title: "Broadway Shows to See", desp: "A guide to the most popular Broadway shows currently running.", category: "Entertainment", para: "" }
 ];
+
 
 const Home: React.FC = () => {
   const context = useContext<DataContextType | undefined>(DataContext);
@@ -60,10 +81,17 @@ const Home: React.FC = () => {
               />
             </div>
             <button
-              className="absolute top-2 right-2 bg-gray-800 text-white p-1 rounded"
-              onClick={() => handleFavouriteClick(item)}
+              className="absolute bottom-6 right-6 bg-neutral-900 text-white p-1 px-2 border-none rounded-xl"
+              onClick={(e) => { 
+                e.stopPropagation();
+                handleFavouriteClick(item);
+              }}
             >
-              {favourites.some(fav => fav.title === item.title) ? 'Unfavourite' : 'Favourite'}
+              {favourites.some(fav => fav.title === item.title) ? (
+                <FavoriteIcon />
+              ) : (
+                <FavoriteBorderIcon />
+              )}
             </button>
           </div>
         ))}

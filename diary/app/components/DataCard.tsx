@@ -13,7 +13,7 @@ const DataCard: React.FC<DataCardProps> = ({ title, desp, category }) => {
       <div>
         <div className='text-xl'>{title}</div>
         <div className='text-neutral-400'>{desp}</div>
-        <div className='text-neutral-300 text-lg border-1 border-white rounded-sm'>{category}</div>
+        <div className='text-neutral-300 text-md border-none w-fit absolute bottom-4 px-2 py-1 bg-neutral-900 rounded-lg mb-2'>{category}</div>
       </div>
     </div>
   );
