@@ -15,6 +15,10 @@ export interface DataContextType {
     setShowDemo: Dispatch<SetStateAction<boolean>>;
     categoryFilter: string;
     setCategoryFilter: Dispatch<SetStateAction<string>>;
+    favourites: DataItem[];
+    setFavourites: Dispatch<SetStateAction<DataItem[]>>;
+    showFavourites: boolean;
+    setShowFavourites: Dispatch<SetStateAction<boolean>>;
 }
 
 interface DataContextProviderProps {
@@ -27,9 +31,11 @@ export const DataContextProvider: React.FC<DataContextProviderProps> = ({ childr
     const [data, setData] = useState<DataItem[]>([]);
     const [showDemo, setShowDemo] = useState(false);
     const [categoryFilter, setCategoryFilter] = useState('');
+    const [favourites, setFavourites] = useState<DataItem[]>([]);
+    const [showFavourites, setShowFavourites] = useState(false);
 
     return (
-        <DataContext.Provider value={{ data, setData, showDemo, setShowDemo, categoryFilter, setCategoryFilter }}>
+        <DataContext.Provider value={{ data, setData, showDemo, setShowDemo, categoryFilter, setCategoryFilter, favourites, setFavourites, showFavourites, setShowFavourites }}>
             {children}
         </DataContext.Provider>
     );

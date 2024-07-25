@@ -1,3 +1,4 @@
+// ActionBar.jsx
 'use client';
 import React, { useContext } from 'react';
 import Link from 'next/link';
@@ -10,10 +11,16 @@ const ActionBar: React.FC = () => {
     throw new Error('DataContext must be used within a DataContextProvider');
   }
 
-  const { setShowDemo } = context;
+  const { setShowDemo, setShowFavourites } = context;
 
   const handleDemoClick = () => {
     setShowDemo((prev) => !prev);
+    setShowFavourites(false);
+  };
+
+  const handleFavouritesClick = () => {
+    setShowFavourites((prev) => !prev);
+    setShowDemo(false);
   };
 
   return (
@@ -22,6 +29,7 @@ const ActionBar: React.FC = () => {
         <ol className='text-lg text-neutral-400 py-2'>
           <Link href='/create'><li className='p-2'>Create</li></Link>
           <li className='p-2'><button onClick={handleDemoClick}>Demo</button></li>
+          <li className='p-2'><button onClick={handleFavouritesClick}>Favourites</button></li>
         </ol>
       </div>
     </div>

@@ -1,3 +1,4 @@
+// Home.jsx
 'use client';
 import React, { useContext } from 'react';
 import { useRouter } from 'next/navigation';
@@ -26,13 +27,23 @@ const Home: React.FC = () => {
     throw new Error('DataContext must be used within a DataContextProvider');
   }
 
-  const { data, showDemo, categoryFilter } = context;
+  const { data, showDemo, categoryFilter, favourites, setFavourites, showFavourites } = context;
 
   const handleCardClick = (index: number) => {
     router.push(`/edit/${index}`);
   };
 
-  const itemsToDisplay = (showDemo ? demoData : data).filter(item => !categoryFilter || item.category === categoryFilter);
+  const handleFavouriteClick = (item: DataItem) => {
+    setFavourites((prevFavourites) => {
+      if (prevFavourites.some(fav => fav.title === item.title)) {
+        return prevFavourites.filter(fav => fav.title !== item.title);
+      } else {
+        return [...prevFavourites, item];
+      }
+    });
+  };
+
+  const itemsToDisplay = (showFavourites ? favourites : (showDemo ? demoData : data)).filter(item => !categoryFilter || item.category === categoryFilter);
 
   return (
     <main className="flex w-[100%] h-auto flex-col text-white items-center justify-left px-4 py-12 bg-neutral-950">
@@ -40,12 +51,20 @@ const Home: React.FC = () => {
       
       <div className='flex flex-wrap justify-left items-center mt-4 mx-8 bg-neutral-950'>
         {itemsToDisplay.map((item, index) => (
-          <div key={index} onClick={() => handleCardClick(index)}>
-            <DataCard 
-              title={item.title} 
-              desp={item.desp} 
-              category={item.category}
-            />
+          <div key={index} className="relative">
+            <div onClick={() => handleCardClick(index)}>
+              <DataCard 
+                title={item.title} 
+                desp={item.desp} 
+                category={item.category}
+              />
+            </div>
+            <button
+              className="absolute top-2 right-2 bg-gray-800 text-white p-1 rounded"
+              onClick={() => handleFavouriteClick(item)}
+            >
+              {favourites.some(fav => fav.title === item.title) ? 'Unfavourite' : 'Favourite'}
+            </button>
           </div>
         ))}
       </div>

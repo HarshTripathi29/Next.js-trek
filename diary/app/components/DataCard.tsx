@@ -1,3 +1,4 @@
+// DataCard.tsx
 import React from 'react';
 
 interface DataCardProps {
