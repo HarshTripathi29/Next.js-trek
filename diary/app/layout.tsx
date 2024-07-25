@@ -21,7 +21,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <DataContextProvider>
-          <div className="flex w-screen items-top bg-neutral-900">
+          <div className="flex w-screen h-auto items-top bg-neutral-950">
             <Sidebar />
             <main className="w-4/6">{children}</main>
             <ActionBar />
