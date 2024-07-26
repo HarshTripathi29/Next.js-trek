@@ -2,24 +2,18 @@ import React from 'react';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import WebIcon from '@mui/icons-material/Web';
+import SearchBar from './SearchBar';
 
 const Header = () => {
   return (
-    <div>
-      <div className='bg-neutral-800 w-full py-12 px-60 border-none rounded-2xl mb-0'>
-        <ul className='flex'>
-          <li className='flex items-center p-4'>
-            <GitHubIcon className='mr-2' /> 
-          </li>
-          <li className='flex items-center p-4'>
-            <InstagramIcon className='mr-2' /> 
-          </li>
-          <li className='flex items-center p-4'>
-            <WebIcon className='mr-2' /> 
-          </li>
-        </ul>
+    <header className="bg-neutral-800 w-screen px-4 py-2 flex justify-between items-center sticky top-0 z-50">
+      <div className="flex items-center">
+        <GitHubIcon className="text-white mr-4" />
+        <InstagramIcon className="text-white mr-4" />
+        <WebIcon className="text-white" />
       </div>
-    </div>
+      <SearchBar />
+    </header>
   );
 }
 

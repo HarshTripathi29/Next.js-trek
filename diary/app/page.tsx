@@ -4,8 +4,9 @@ import { useRouter } from 'next/navigation';
 import { DataContext, DataContextType } from './context/DataContext';
 import DataCard from './components/DataCard';
 import Header from './components/Header';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+
 
 const demoData = [
   // Technology
@@ -48,7 +49,7 @@ const Home: React.FC = () => {
     throw new Error('DataContext must be used within a DataContextProvider');
   }
 
-  const { data, showDemo, categoryFilter, favourites, setFavourites, showFavourites } = context;
+  const { data, showDemo, categoryFilter, favourites, setFavourites, showFavourites, searchQuery } = context;
 
   const handleCardClick = (index: number) => {
     router.push(`/edit/${index}`);
@@ -64,15 +65,25 @@ const Home: React.FC = () => {
     });
   };
 
-  const itemsToDisplay = (showFavourites ? favourites : (showDemo ? demoData : data)).filter(item => !categoryFilter || item.category === categoryFilter);
+  const filteredData = (showFavourites ? favourites : (showDemo ? demoData : data))
+    .filter(item => !categoryFilter || item.category === categoryFilter)
+    .filter(item => item.title.toLowerCase().includes(searchQuery.toLowerCase()));
 
   return (
-    <main className="flex w-[100%] h-auto flex-col text-white items-center justify-left px-4 py-12 bg-neutral-950">
+    <main className="flex w-[100%] h-auto flex-col text-white items-center justify-center px-4 py-12 pl-0 pt-0 bg-neutral-950">
       <Header />
       
-      <div className='flex flex-wrap justify-left items-center mt-4 mx-8 bg-neutral-950'>
-        {itemsToDisplay.map((item, index) => (
+        <div className='flex flex-wrap justify-left items-center mt-8 px-12 ml-12 bg-neutral-950'>
+          <div className='w-80 h-48 bg-neutral-800 rounded-2xl p-4 m-4 mt-0'>
+                <div>
+                  <div className='text-xl text-red-500 font-bold'>Hello from Harsh.</div>
+                  <div className='text-neutral-400 '>Please fo through the features of this app and share you experience.</div>
+                </div>
+        </div>
+
+        {filteredData.map((item, index) => (
           <div key={index} className="relative">
+            
             <div onClick={() => handleCardClick(index)}>
               <DataCard 
                 title={item.title} 
@@ -82,16 +93,9 @@ const Home: React.FC = () => {
             </div>
             <button
               className="absolute bottom-6 right-6 bg-neutral-900 text-white p-1 px-2 border-none rounded-xl"
-              onClick={(e) => { 
-                e.stopPropagation();
-                handleFavouriteClick(item);
-              }}
+              onClick={() => handleFavouriteClick(item)}
             >
-              {favourites.some(fav => fav.title === item.title) ? (
-                <FavoriteIcon />
-              ) : (
-                <FavoriteBorderIcon />
-              )}
+              {favourites.some(fav => fav.title === item.title) ? <FavoriteIcon /> : <FavoriteBorderIcon />}
             </button>
           </div>
         ))}

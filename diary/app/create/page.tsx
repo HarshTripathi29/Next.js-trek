@@ -35,34 +35,34 @@ const Page: React.FC = () => {
   };
 
   return (
-    <div className='w-[100%] h-screen bg-neutral-900 flex justify-center align-top p-12'>
+    <div className='w-[100%] h-screen bg-neutral-950 flex justify-center align-top p-12'>
       <div className='flex'>
-        <div className='flex justify-center'>
+        <div className='flex h-5/6 justify-center bg-neutral-800 p-8 border-none rounded-3xl'>
           <ReactQuill
-            className='h-4/6'
+            className='h-5/6'
             value={para}
             onChange={(value: string) => setPara(value)}
           />
         </div>
 
-        <div className='flex flex-col bg-neutral-800 border-1 ml-2 p-2 h-4/6 rounded-md'>
+        <div className='flex flex-col bg-neutral-800 border-1 ml-2 px-2 h-[40%] rounded-3xl py-8'>
           <input
             type='text'
             placeholder='title'
-            className='py-1 px-2 m-2 mt-0 border-1 bg-neutral-700 rounded-sm'
+            className='py-1 px-2 m-1 mt-0 border-1 bg-neutral-700 rounded-md'
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => setTitle(e.target.value)}
             value={title}
           />
           <input
             type='text'
             placeholder='description'
-            className='py-1 px-2 m-2 border-1 bg-neutral-700 rounded-sm'
+            className='py-1 px-2 m-1 border-1 bg-neutral-700 rounded-md'
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => setDesp(e.target.value)}
             value={desp}
           />
           <select
             value={category}
-            className='py-1 px-2 m-2 border-1 bg-neutral-700 rounded-sm'
+            className='py-2 px-2 m-1 border-1 bg-neutral-700 rounded-md'
             onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setCategory(e.target.value)}
           >
             <option value='' disabled>Select Category</option>
@@ -73,14 +73,17 @@ const Page: React.FC = () => {
             <option value='Health'>Health</option>
             <option value='Others'>Others</option>
           </select>
-          <div className='p-2 pl-0'>
+          <div className=' pl-0'>
             <button
-              className='bg-white text-black py-1 px-2 m-2 rounded-sm'
+              className='bg-neutral-300 text-black py-1 px-2 m-2 rounded-sm hover:bg-neutral-900 hover:text-neutral-300'
               onClick={handleClick}
             >
               Save
             </button>
-            <button className='bg-white text-black py-1 px-2 rounded-sm' onClick={() => router.push('/')}>Discard</button>
+            <button className='bg-neutral-300 text-black py-1 px-2 rounded-sm hover:bg-neutral-900 hover:text-neutral-300' onClick={() => router.push('/')}
+            >
+              Discard
+            </button>
           </div>
         </div>
       </div>

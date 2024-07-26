@@ -1,3 +1,4 @@
+// context/DataContext.js
 'use client';
 import React, { createContext, useState, ReactNode, Dispatch, SetStateAction } from 'react';
 
@@ -19,6 +20,8 @@ export interface DataContextType {
     setFavourites: Dispatch<SetStateAction<DataItem[]>>;
     showFavourites: boolean;
     setShowFavourites: Dispatch<SetStateAction<boolean>>;
+    searchQuery: string;
+    setSearchQuery: Dispatch<SetStateAction<string>>;
 }
 
 interface DataContextProviderProps {
@@ -33,9 +36,10 @@ export const DataContextProvider: React.FC<DataContextProviderProps> = ({ childr
     const [categoryFilter, setCategoryFilter] = useState('');
     const [favourites, setFavourites] = useState<DataItem[]>([]);
     const [showFavourites, setShowFavourites] = useState(false);
+    const [searchQuery, setSearchQuery] = useState('');
 
     return (
-        <DataContext.Provider value={{ data, setData, showDemo, setShowDemo, categoryFilter, setCategoryFilter, favourites, setFavourites, showFavourites, setShowFavourites }}>
+        <DataContext.Provider value={{ data, setData, showDemo, setShowDemo, categoryFilter, setCategoryFilter, favourites, setFavourites, showFavourites, setShowFavourites, searchQuery, setSearchQuery }}>
             {children}
         </DataContext.Provider>
     );

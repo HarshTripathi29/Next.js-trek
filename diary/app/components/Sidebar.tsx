@@ -23,7 +23,7 @@ const Sidebar: React.FC = () => {
   };
 
   return (
-    <div className='w-[15%] h-3/6 bg-neutral-800 text-white border-none rounded-3xl m-12 p-4 px-2'>
+    <div className='w-[15%] h-3/6 bg-neutral-800 text-white border-none rounded-3xl ml-12 mt-28 p-4 px-2'>
       <div>
         <ol className='text-lg text-neutral-400 py-2'>
           <li className='flex items-center p-2 cursor-pointer  hover:bg-neutral-300 hover:text-neutral-950 hover:border-none hover:rounded-lg' onClick={() => handleCategoryClick('Entertainment')}>

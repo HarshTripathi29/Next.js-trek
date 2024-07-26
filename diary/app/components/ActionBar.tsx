@@ -26,7 +26,7 @@ const ActionBar: React.FC = () => {
   };
 
   return (
-    <div className='w-[15%] h-3/6 bg-neutral-800 text-white border-none rounded-2xl m-12 p-4 px-2'>
+    <div className='w-[15%] h-3/6 bg-neutral-800 text-white border-none rounded-2xl mr-20 mt-28 p-4 px-2'>
       <div>
         <ol className='text-lg text-neutral-400 py-2'>
           <Link href='/create'>
